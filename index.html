@@ -15,6 +15,7 @@
       //   import { initializeApp } from "firebase/app";
       //   import { getAnalytics } from "firebase/analytics";
       import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
+      import { getStorage, ref, uploadBytesResumable } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-storage.js";
       import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-analytics.js";
 
       // TODO: Add SDKs for Firebase products that you want to use
@@ -23,40 +24,46 @@
       // Your web app's Firebase configuration
       // For Firebase JS SDK v7.20.0 and later, measurementId is optional
       const firebaseConfig = {
-        apiKey: "process.env.apiKey",
-        authDomain: "process.env.authDomain",
-        projectId: "process.env.projectId",
-        storageBucket: "process.env.storageBucket",
-        messagingSenderId: "process.env.messagingSenderId",
-        appId: "process.env.appId",
-        measurementId: "process.env.measurementId",
+        apiKey: "AIzaSyDScVuAHJ0_-Cy1hEdr7LI6r2uaHjk03l0",
+        authDomain: "discord-emoji-39fda.firebaseapp.com",
+        projectId: "discord-emoji-39fda",
+        storageBucket: "discord-emoji-39fda.appspot.com",
+        messagingSenderId: "73740341829",
+        appId: "1:73740341829:web:e2bfc8cfc6f630c74f092c",
+        measurementId: "G-C6QCX2STKD",
       };
 
       // Initialize Firebase
       const app = initializeApp(firebaseConfig);
-      const analytics = getAnalytics(app);
 
-      const storageService = firebase.storage();
-      const storageRef = storageService.ref();
+      // Initialize Firebase Storage
+      const storage = getStorage(app);
 
       let selectedFile;
+
       function handleFileUploadChange(e) {
         selectedFile = e.target.files[0];
       }
 
       function handleFileUploadSubmit(e) {
-        const uploadTask = storageRef
-          .child(`images/${selectedFile.name}`)
-          .put(selectedFile); // creates a child directory called images, and place the file inside this directory
+        if (!selectedFile) {
+          alert("Please select a file first.");
+          return;
+        }
+
+        const storageRef = ref(storage, `images/${selectedFile.name}`);
+        const uploadTask = uploadBytesResumable(storageRef, selectedFile);
+
         uploadTask.on(
           "state_changed",
-          (snapshot) => {},
+          (snapshot) => {
+          },
           (error) => {
-            console.log(error);
+            console.error("Upload failed:", error);
           },
           () => {
-            // upload complete
-            console.log("success");
+            // what happens if success
+            console.log("Upload success!");
           }
         );
       }
