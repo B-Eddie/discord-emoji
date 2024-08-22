@@ -1,28 +1,35 @@
-const express = require('express');
-const path = require('path');
-const cors = require('cors');
+const express = require("express");
+const path = require("path");
+const cors = require("cors");
+
+require('dotenv').config();
 // import express from "express";
 // import path from "path";
 // import cors from "cors";
 
 const app = express();
-app.use(cors());
-app.set('view engine', 'ejs')
+app.use(
+  cors({
+    origin: "*",
+    headers: "*",
+    methods: ["GET", "POST"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+  })
+);
+app.set("view engine", "ejs");
 
-// Serve static files from the 'public' directory
-app.use(express.static(path.join(__dirname, 'views')));
+app.use(express.static(path.join(__dirname, "public")));
 
-// Inject environment variables into your HTML
 app.get("/", (req, res) => {
-    res.render('index', {
-        apiKey: process.env.apiKey,
-        authDomain: process.env.authDomain,
-        projectId: process.env.projectId,
-        storageBucket: process.env.storageBucket,
-        messagingSenderId: process.env.messagingSenderId,
-        appId: process.env.appId,
-        measurementId: process.env.measurementId,
-    });
+  res.render("index", {
+    apiKey: process.env.apiKey,
+    authDomain: process.env.authDomain,
+    projectId: process.env.projectId,
+    storageBucket: process.env.storageBucket,
+    messagingSenderId: process.env.messagingSenderId,
+    appId: process.env.appId,
+    measurementId: process.env.measurementId,
+  });
 });
 
 const PORT = 5050;
