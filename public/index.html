@@ -32,6 +32,15 @@
           appId: "<%= appId %>",
           measurementId: "<%= measurementId %>",
       };
+      console.log(
+        "<%= apiKey %>",
+        "<%= authDomain %>",
+        "<%= projectId %>",
+        "<%= storageBucket %>",
+        "<%= messagingSenderId %>",
+        "<%= appId %>",
+        "<%= measurementId %>",
+      );
 
       // Initialize Firebase
       const app = initializeApp(firebaseConfig);

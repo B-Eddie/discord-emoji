@@ -3,21 +3,22 @@ const path = require("path");
 const cors = require("cors");
 
 require('dotenv').config();
-// import express from "express";
-// import path from "path";
-// import cors from "cors";
 
 const app = express();
+
+// Configure CORS
 app.use(
   cors({
-    origin: "*",
-    headers: "*",
-    methods: ["GET", "POST"],
+    origin: "*", // Adjust this to the specific domains you want to allow
+    methods: ["GET", "POST", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
-app.set("view engine", "ejs");
 
+// Handle preflight requests
+app.options('*', cors());
+
+app.set("view engine", "ejs");
 app.use(express.static(path.join(__dirname, "public")));
 
 app.get("/", (req, res) => {
