@@ -1,3 +1,4 @@
+"use client"; 
 import { useState } from "react";
 import { ref, uploadBytesResumable } from "firebase/storage";
 import { storage } from "../lib/firebaseConfig";
