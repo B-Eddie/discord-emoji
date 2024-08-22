@@ -2,7 +2,7 @@ const express = require("express");
 const path = require("path");
 const cors = require("cors");
 
-require('dotenv').config();
+require("dotenv").config();
 
 const app = express();
 
@@ -16,7 +16,7 @@ app.use(
 );
 
 // Handle preflight requests
-app.options('*', cors());
+app.options("*", cors());
 
 app.set("view engine", "ejs");
 app.use(express.static(path.join(__dirname, "public")));
