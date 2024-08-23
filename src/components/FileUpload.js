@@ -1,10 +1,11 @@
-"use client"; 
+"use client";
 import { useState } from "react";
 import { ref, uploadBytesResumable } from "firebase/storage";
 import { storage } from "../lib/firebaseConfig";
 
 export default function FileUpload() {
   const [selectedFile, setSelectedFile] = useState(null);
+  const [uploadStatus, setUploadStatus] = useState("");
 
   const handleFileUploadChange = (e) => {
     setSelectedFile(e.target.files[0]);
@@ -24,9 +25,10 @@ export default function FileUpload() {
       (snapshot) => {},
       (error) => {
         console.error("Upload failed:", error);
+        setUploadStatus("Upload failed.");
       },
       () => {
-        console.log("Upload success!");
+        setUploadStatus("Upload successful!"); // Update state on success
       }
     );
   };
@@ -35,6 +37,7 @@ export default function FileUpload() {
     <div id="filesubmit">
       <input type="file" onChange={handleFileUploadChange} />
       <button onClick={handleFileUploadSubmit}>SUBMIT</button>
+      {uploadStatus && <p>{uploadStatus}</p>} {/* upload status */}
     </div>
   );
 }
