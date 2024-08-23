@@ -35,7 +35,7 @@ export default function Emojis() {
       <h1 className="text-4xl font-bold">Emojis</h1>
       <div className="flex flex-row mt-14 gap-5 flex-wrap justify-center items-start">
         {data.map((item) => (
-          <div className="border-black border-2 rounded-xl p-2 transition-all hover:scale-105 hover:cursor-pointer" key={item.name}>
+          <div className="border-2 rounded-xl p-2 transition-all hover:scale-105 hover:cursor-pointer" key={item.name}>
             <img src={item.url} alt={item.name} className="w-32 h-auto" />
             <p className="h-auto">{item.name}</p>
           </div>
