@@ -6,9 +6,12 @@ import { storage } from "../lib/firebaseConfig";
 export default function FileUpload() {
   const [selectedFile, setSelectedFile] = useState(null);
   const [uploadStatus, setUploadStatus] = useState("");
+  const [filename, setFilename] = useState("Upload an Image"); // New state for filename
 
   const handleFileUploadChange = (e) => {
-    setSelectedFile(e.target.files[0]);
+    const file = e.target.files[0];
+    setSelectedFile(file);
+    setFilename(file ? file.name : "Upload an Image"); // Update filename state
   };
 
   const handleFileUploadSubmit = () => {
@@ -22,7 +25,9 @@ export default function FileUpload() {
 
     uploadTask.on(
       "state_changed",
-      (snapshot) => {},
+      (snapshot) => {
+        setUploadStatus("Loading...");
+      },
       (error) => {
         console.error("Upload failed:", error);
         setUploadStatus("Upload failed.");
@@ -34,10 +39,29 @@ export default function FileUpload() {
   };
 
   return (
-    <div id="filesubmit">
-      <input type="file" onChange={handleFileUploadChange} />
-      <button onClick={handleFileUploadSubmit}>SUBMIT</button>
-      {uploadStatus && <p>{uploadStatus}</p>} {/* upload status */}
+    <div id="filesubmit" className="flex flex-col items-center justify-center mt-20">
+      <h1 className="text-4xl font-bold">Upload Emojis</h1>
+      <div className="flex flex-row items-center justify-center gap-4 mt-5 text-center">
+        <input
+          id="file-input"
+          className="hidden"
+          type="file"
+          onChange={handleFileUploadChange}
+        />
+        <label
+          htmlFor="file-input"
+          className="px-4 py-2 text-black bg-transparent border-2 border-gray-400 rounded cursor-pointer"
+        >
+          {filename}
+        </label>
+        <button
+          onClick={handleFileUploadSubmit}
+          className="px-4 py-2 text-black transition-transform border-4 border-white rounded hover:scale-110"
+        >
+          SUBMIT
+        </button>
+      </div>
+        <p className="mt-4">{uploadStatus}</p> 
     </div>
   );
 }
