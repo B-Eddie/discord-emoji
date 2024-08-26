@@ -26,23 +26,23 @@ export default function Emojis() {
           result.items.map(async (itemRef) => {
             const url = await getDownloadURL(itemRef);
 
-            try {
-              const response = await fetch(
-                `/api/downloadImage?imageUrl=${encodeURIComponent(
-                  url
-                )}&imageName=${encodeURIComponent(itemRef.name)}`
-              );
-              if (!response.ok) {
-                throw new Error("network not okay");
-              }
-              const data = await response.json();
-              if (data.success) {
-              } else {
-                console.log("did not work");
-              }
-            } catch (error) {
-              console.error("problem: ", error);
-            }
+            // try {
+            //   const response = await fetch(
+            //     `/api/downloadImage?imageUrl=${encodeURIComponent(
+            //       url
+            //     )}&imageName=${encodeURIComponent(itemRef.name)}`
+            //   );
+            //   if (!response.ok) {
+            //     throw new Error("network not okay");
+            //   }
+            //   const data = await response.json();
+            //   if (data.success) {
+            //   } else {
+            //     console.log("did not work");
+            //   }
+            // } catch (error) {
+            //   console.error("problem: ", error);
+            // }
 
             return { name: itemRef.name, url };
           })
