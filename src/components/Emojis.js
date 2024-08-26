@@ -14,6 +14,12 @@ export default function Emojis() {
   const handleMouseLeave = () => {
     setTooltipVisible(null);
   };
+
+  const copyImageLink = (name) => {
+    navigator.clipboard.writeText(window.location.href + "/images/" + name);
+    document.getElementById(name).innerHTML = `Copied ${name}`
+  };
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -25,24 +31,6 @@ export default function Emojis() {
         const urls = await Promise.all(
           result.items.map(async (itemRef) => {
             const url = await getDownloadURL(itemRef);
-
-            // try {
-            //   const response = await fetch(
-            //     `/api/downloadImage?imageUrl=${encodeURIComponent(
-            //       url
-            //     )}&imageName=${encodeURIComponent(itemRef.name)}`
-            //   );
-            //   if (!response.ok) {
-            //     throw new Error("network not okay");
-            //   }
-            //   const data = await response.json();
-            //   if (data.success) {
-            //   } else {
-            //     console.log("did not work");
-            //   }
-            // } catch (error) {
-            //   console.error("problem: ", error);
-            // }
 
             return { name: itemRef.name, url };
           })
@@ -71,21 +59,38 @@ export default function Emojis() {
             {tooltipVisible === item.name && (
               <div
                 role="tooltip"
-                className="absolute z-10 inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-100 tooltip dark:bg-gray-700"
+                className="absolute z-10 inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-100 w-max tooltip dark:bg-gray-700"
                 style={{
-                  top: "100%",
+                  top: "-24%",
                   left: "50%",
                   transform: "translateX(-50%)",
                 }}
+                id={`${item.name}`}
               >
-                {item.name}
-                <div className="tooltip-arrow" />
+                Click to copy
+                <div
+                  className="tooltip-arrow"
+                  data-popper-arrow
+                  style={{
+                    position: "absolute",
+                    width: 0,
+                    height: 0,
+                    borderWidth: "5px",
+                    borderStyle: "solid",
+                    borderColor: "transparent transparent #333 transparent",
+                    top: "100%",
+                    left: "50%",
+                    transform: "translateX(-50%)",
+                    transform: "rotate(180deg)",
+                  }}
+                />
               </div>
             )}
 
             <div
               className="relative p-2 text-center transition-all border-2 h-52 rounded-xl hover:scale-105 hover:cursor-pointer"
               key={item.name}
+              onClick={() => copyImageLink(item.name)}
             >
               <img
                 src={item.url}
