@@ -41,7 +41,7 @@ export default function FileUpload() {
   return (
     <div id="filesubmit" className="flex flex-col items-center justify-center mt-20">
       <h1 className="text-4xl font-bold">Upload Emojis</h1>
-      <div className="flex flex-row items-center justify-center gap-4 mt-5 text-center">
+      <div className="flex flex-row items-center justify-center gap-4 mt-5 text-center text-black dark:text-white">
         <input
           id="file-input"
           className="hidden"
@@ -50,13 +50,13 @@ export default function FileUpload() {
         />
         <label
           htmlFor="file-input"
-          className="px-4 py-2 text-black bg-transparent border-2 border-gray-400 rounded cursor-pointer"
+          className="px-4 py-2 bg-transparent border-2 border-gray-400 rounded cursor-pointer"
         >
           {filename}
         </label>
         <button
           onClick={handleFileUploadSubmit}
-          className="px-4 py-2 text-black transition-transform border-4 border-white rounded hover:scale-110"
+          className="px-4 py-2 transition-transform border-4 border-white rounded hover:scale-110"
         >
           SUBMIT
         </button>
