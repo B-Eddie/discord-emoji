@@ -2,7 +2,7 @@
 export default function Footer() {
   return (
     <div className="flex flex-col items-center w-screen py-10 mt-20 text-white bg-blue-900">
-      <p>Copyright ©2022; Designed by Eddie B.</p>
+      <p>Copyright ©2024; Cooked up by Eddie B.</p>
       <div className="flex flex-row items-center mt-10">
         <a href="https://www.instagram.com/eddie.bian/" target="_blank">
           <svg
